@@ -657,6 +657,8 @@ function debounce(fn: Function, delay: number): Function;
 │  │       ──────                │    │
 │  │   [Food] [Transport] [Fun]  │    │  ← Legend
 │  └─────────────────────────────┘    │
+├─────────────────────────────────────┤
+│   Developed by Christian Starly     │  ← Semantic Footer
 └─────────────────────────────────────┘
 ```
 
@@ -906,3 +908,89 @@ function checkBrowserCompatibility(): boolean {
   </div>
 </noscript>
 ```
+
+---
+
+## Optional Challenges Design Specifications
+
+### 1. Dark/Light Mode Theme Architecture
+
+**Design Concept**: CSS custom property token switching anchored on `[data-theme="dark"]`.
+
+```css
+[data-theme="dark"] {
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f8fafc;
+  --color-text-muted: #94a3b8;
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-food-bg: rgba(255, 107, 107, 0.25);
+  --color-transport-bg: rgba(78, 205, 196, 0.25);
+  --color-fun-bg: rgba(255, 230, 109, 0.25);
+}
+```
+
+**State & Storage Integration**:
+- Storage Key: `expense_visualizer_theme` ('dark' | 'light')
+- Automatic detection: `window.matchMedia('(prefers-color-scheme: dark)')`
+
+### 2. Spending Budget Limit System
+
+**Design Concept**: Compares current total spending against a user-defined threshold.
+
+```typescript
+interface BudgetState {
+  limit: number | null;
+  status: 'safe' | 'warning' | 'exceeded';
+  percentageUsed: number;
+}
+```
+
+- Storage Key: `expense_visualizer_budget_limit`
+- Warning status (< 80%: Normal/Safe, 80%-100%: Warning/Caution, > 100%: Exceeded Alert).
+- Visual feedback: Dedicated budget progress bar and alert badge on the Balance card.
+
+### 3. Transaction Sorting Pipeline
+
+**Design Concept**: Dynamic sorting before view rendering without mutating the underlying chronological database.
+
+```typescript
+type SortOption = 'date-desc' | 'date-asc' | 'amount-desc' | 'amount-asc' | 'category-asc';
+```
+
+- Function: `getSortedTransactions(transactions, sortOption)`
+- Preserves user choice across additions and deletions.
+
+### 4. Monthly Summary & Filter Architecture
+
+**Design Concept**: Time-based partitioning of transactions for localized spending analysis.
+
+```typescript
+interface MonthlySummary {
+  monthKey: string;      // "2026-10"
+  monthLabel: string;    // "October 2026"
+  totalSpending: number;
+  transactionCount: number;
+  categoryTotals: Map<string, number>;
+}
+```
+
+- Allows the user to toggle between "All Time" and any recorded month.
+- Automatically adjusts the Total Balance display, Transaction List, and Pie Chart to match the selected period.
+
+### 5. Custom Categories Management
+
+**Design Concept**: Extensible category registry supporting arbitrary user categories with dynamic color generation.
+
+```typescript
+interface CustomCategory {
+  name: string;
+  color: string;
+  isCustom: boolean;
+}
+```
+
+- Storage Key: `expense_visualizer_custom_categories`
+- Automatic HSL color generator for newly created categories to guarantee high visual harmony and chart contrast.
+- Synchronized with dropdown options, pie chart segments, badges, and validation logic.
+

@@ -1,114 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Expense & Budget Visualizer - Track your daily expenses with ease">
+    <meta name="description"
+        content="Expense & Budget Visualizer - Track your daily expenses, monitor budgets, and analyze spending distribution with ease">
     <title>Expense & Budget Visualizer</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
     <noscript>
         <div class="browser-warning">
-            This application requires JavaScript to function. 
+            This application requires JavaScript to function.
             Please enable JavaScript in your browser settings.
         </div>
     </noscript>
-    
+
     <main class="app-container">
-        <!-- Balance Display Section -->
+        <!-- Application Header with Theme Toggle (Req 11) -->
+        <header class="app-header">
+            <div class="header-brand">
+                <span class="header-badge">Expense & Budget Visualizer
+                </span>
+                <p class="header-subtitle">Track daily expenses, manage budget limits & visualize category spending</p>
+            </div>
+            <div class="header-controls">
+                <button type="button" id="theme-toggle" class="btn-theme-toggle" aria-label="Toggle dark or light mode"
+                    title="Toggle theme">
+                    <span class="theme-icon light-icon" aria-hidden="true">☀️</span>
+                    <span class="theme-icon dark-icon" aria-hidden="true">🌙</span>
+                    <span class="theme-text" id="theme-text">Dark Mode</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Balance Display & Budget Section (Req 4, 12) -->
         <section class="balance-section" aria-labelledby="balance-heading">
-            <h1 id="balance-heading" class="balance-label">Total Balance</h1>
-            <p class="balance-value" id="total-balance" aria-live="polite">Rp 0.00</p>
+            <div class="balance-header-row">
+                <div class="balance-col">
+                    <h1 id="balance-heading" class="balance-label">Total Balance</h1>
+                    <p class="balance-value" id="total-balance" aria-live="polite">Rp 0.00</p>
+                </div>
+                <div class="budget-badge-container" id="budget-badge-container">
+                    <span id="budget-status-badge" class="budget-badge budget-badge-neutral">No limit set</span>
+                </div>
+            </div>
+
+            <!-- Budget Threshold & Setting Area (Req 12) -->
+            <div class="budget-controls" id="budget-controls">
+                <div class="budget-meta">
+                    <span class="budget-limit-label" id="budget-limit-display">Monthly Budget: Not set</span>
+                    <span class="budget-usage-label" id="budget-usage-display">0% used</span>
+                </div>
+                <div class="budget-progress-track" id="budget-progress-track" role="progressbar" aria-valuenow="0"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <div class="budget-progress-fill" id="budget-progress-fill" style="width: 0%;"></div>
+                </div>
+                <form class="budget-form" id="budget-form" novalidate>
+                    <label for="budget-limit-input" class="visually-hidden">Budget Limit</label>
+                    <input type="number" id="budget-limit-input" class="form-input budget-input" min="0.01"
+                        max="99999999.99" step="0.01" placeholder="Set monthly budget (e.g. 1000000)">
+                    <button type="submit" class="btn-secondary btn-budget" id="btn-save-budget">Set Budget</button>
+                    <button type="button" class="btn-text btn-clear-budget" id="btn-clear-budget"
+                        title="Remove budget limit" hidden>Remove</button>
+                </form>
+            </div>
         </section>
-        
-        <!-- Transaction Input Form Section -->
+
+        <!-- Transaction Input Form Section (Req 1, 15) -->
         <section class="form-section" aria-labelledby="form-heading">
             <h2 id="form-heading" class="visually-hidden">Add Transaction</h2>
             <form id="transaction-form" class="transaction-form" novalidate>
                 <!-- Item Name Field -->
                 <div class="form-group">
                     <label for="item-name" class="form-label">Item Name</label>
-                    <input 
-                        type="text" 
-                        id="item-name" 
-                        name="itemName"
-                        class="form-input" 
-                        maxlength="100"
-                        placeholder="Enter item name"
-                        autocomplete="off"
-                        aria-describedby="item-name-error"
-                        required
-                    >
+                    <input type="text" id="item-name" name="itemName" class="form-input" maxlength="100"
+                        placeholder="Enter item name" autocomplete="off" aria-describedby="item-name-error" required>
                     <span id="item-name-error" class="error-message" role="alert" aria-live="polite"></span>
                 </div>
-                
+
                 <!-- Amount Field -->
                 <div class="form-group">
                     <label for="amount" class="form-label">Amount (Rp)</label>
-                    <input 
-                        type="number" 
-                        id="amount" 
-                        name="amount"
-                        class="form-input" 
-                        min="0.01"
-                        max="9999999.99"
-                        step="0.01"
-                        placeholder="0.00"
-                        aria-describedby="amount-error"
-                        required
-                    >
+                    <input type="number" id="amount" name="amount" class="form-input" min="0.01" max="9999999.99"
+                        step="0.01" placeholder="0.00" aria-describedby="amount-error" required>
                     <span id="amount-error" class="error-message" role="alert" aria-live="polite"></span>
                 </div>
-                
-                <!-- Category Field -->
+
+                <!-- Category Field with Custom Category Option (Req 15) -->
                 <div class="form-group">
-                    <label for="category" class="form-label">Category</label>
-                    <select 
-                        id="category" 
-                        name="category"
-                        class="form-select" 
-                        aria-describedby="category-error"
-                        required
-                    >
+                    <div class="category-label-row">
+                        <label for="category" class="form-label">Category</label>
+                        <button type="button" id="btn-toggle-custom-category" class="btn-link" aria-expanded="false">+
+                            New Category</button>
+                    </div>
+                    <select id="category" name="category" class="form-select" aria-describedby="category-error"
+                        required>
                         <option value="">Select category</option>
                         <option value="Food">Food</option>
                         <option value="Transport">Transport</option>
                         <option value="Fun">Fun</option>
                     </select>
                     <span id="category-error" class="error-message" role="alert" aria-live="polite"></span>
+
+                    <!-- Custom Category Creator Box -->
+                    <div id="custom-category-box" class="custom-category-box" hidden>
+                        <div class="custom-category-row">
+                            <input type="text" id="custom-category-name" class="form-input custom-cat-name-input"
+                                placeholder="Category name (e.g. Health)" maxlength="30">
+                            <input type="color" id="custom-category-color" class="custom-cat-color-input"
+                                value="#9b59b6" title="Pick category color" aria-label="Pick category color">
+                            <button type="button" id="btn-add-custom-category"
+                                class="btn-secondary btn-sm">Save</button>
+                            <button type="button" id="btn-cancel-custom-category"
+                                class="btn-text btn-sm">Cancel</button>
+                        </div>
+                        <span id="custom-category-error" class="error-message" role="alert"></span>
+                    </div>
                 </div>
-                
+
                 <!-- Submit Button -->
                 <button type="submit" class="btn-submit" aria-label="Add transaction">
                     Add Transaction
                 </button>
             </form>
         </section>
-        
-        <!-- Transaction List Section -->
+
+        <!-- Transaction List Section with Filter & Sort (Req 2, 3, 13, 14) -->
         <section class="transactions-section" aria-labelledby="transactions-heading">
-            <h2 id="transactions-heading" class="transactions-title">Transactions</h2>
-            <div class="transactions-list-container" id="transactions-list-container" role="list" aria-label="Transaction list">
+            <div class="transactions-header-row">
+                <h2 id="transactions-heading" class="transactions-title">Transactions</h2>
+
+                <!-- Sort & Filter Toolbar (Req 13, 14) -->
+                <div class="transactions-toolbar">
+                    <div class="toolbar-item">
+                        <label for="month-filter" class="toolbar-label">Period:</label>
+                        <select id="month-filter" class="form-select toolbar-select"
+                            aria-label="Filter transactions by month">
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                    <div class="toolbar-item">
+                        <label for="sort-select" class="toolbar-label">Sort:</label>
+                        <select id="sort-select" class="form-select toolbar-select" aria-label="Sort transactions">
+                            <option value="date-desc">Newest First</option>
+                            <option value="date-asc">Oldest First</option>
+                            <option value="amount-desc">Amount: High to Low</option>
+                            <option value="amount-asc">Amount: Low to High</option>
+                            <option value="category-asc">Category: A to Z</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Summary Card (Req 14) -->
+            <div id="monthly-summary-card" class="monthly-summary-card" hidden>
+                <div class="monthly-summary-info">
+                    <span class="monthly-summary-period" id="monthly-summary-period">Month</span>
+                    <span class="monthly-summary-sub">Filtered Period Summary</span>
+                </div>
+                <div class="monthly-summary-stats">
+                    <span class="monthly-summary-amount" id="monthly-summary-amount">Rp 0.00</span>
+                    <span class="monthly-summary-count" id="monthly-summary-count">0 items</span>
+                </div>
+            </div>
+
+            <div class="transactions-list-container" id="transactions-list-container" role="list"
+                aria-label="Transaction list">
                 <!-- Transaction items will be rendered here by JavaScript -->
             </div>
-            <p class="transactions-empty-message" id="transactions-empty-message" role="status" aria-live="polite" hidden>
+            <p class="transactions-empty-message" id="transactions-empty-message" role="status" aria-live="polite"
+                hidden>
                 No transactions recorded yet. Add your first transaction above.
             </p>
         </section>
-        
-        <!-- Pie Chart Section -->
+
+        <!-- Pie Chart Section (Req 5, 10, 14, 15) -->
         <section class="chart-section" aria-labelledby="chart-heading">
-            <h2 id="chart-heading" class="chart-title">Spending Distribution</h2>
+            <div class="chart-header-row">
+                <h2 id="chart-heading" class="chart-title">Spending Distribution</h2>
+                <span class="chart-period-badge" id="chart-period-badge">All Time</span>
+            </div>
             <div class="chart-container">
-                <canvas 
-                    id="pie-chart" 
-                    class="pie-chart-canvas"
-                    width="300" 
-                    height="300"
-                    role="img"
-                    aria-label="Pie chart showing spending distribution by category"
-                ></canvas>
+                <canvas id="pie-chart" class="pie-chart-canvas" width="300" height="300" role="img"
+                    aria-label="Pie chart showing spending distribution by category"></canvas>
                 <p class="chart-empty-message" id="chart-empty-message" role="status" aria-live="polite" hidden>
                     No spending data to display. Add transactions to see your spending distribution.
                 </p>
@@ -128,8 +205,21 @@
                 </div>
             </div>
         </section>
+
+        <!-- Semantic Application Footer & Author Credit -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <p class="footer-credit">
+                    Developed with care by <strong>Christian Starly</strong>
+                </p>
+                <p class="footer-subtitle">
+                    Coding Camp Software Engineer RovoU &bull; Revouneers 2026
+                </p>
+            </div>
+        </footer>
     </main>
-    
+
     <script src="js/app.js" defer></script>
 </body>
+
 </html>

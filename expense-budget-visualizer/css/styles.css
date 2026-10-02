@@ -1,47 +1,109 @@
 /* Expense & Budget Visualizer - Base Styles */
 
-/* CSS Custom Properties */
+/* ==========================================================================
+   CSS Custom Properties (Design System Tokens)
+   Requirements: 7.1 (typography scale >= 16px), 10.2 (headings >= 20px),
+   10.3 (category colors matching pie chart segments)
+   ========================================================================== */
 :root {
     /* Primary Colors */
     --color-primary: #3498db;
+    --color-primary-hover: #2980b9;
     --color-secondary: #2c3e50;
-    
-    /* Category Colors */
+
+    /* Category Colors - Exactly matching Pie Chart segment colors (Req 10.3) */
     --color-food: #FF6B6B;
     --color-transport: #4ECDC4;
     --color-fun: #FFE66D;
-    
-    /* UI Colors */
+
+    /* Category Subtle Accents */
+    --color-food-bg: rgba(255, 107, 107, 0.15);
+    --color-transport-bg: rgba(78, 205, 196, 0.15);
+    --color-fun-bg: rgba(255, 230, 109, 0.2);
+
+    /* UI Surface & Feedback Colors */
     --color-background: #f8f9fa;
     --color-surface: #ffffff;
     --color-text: #2c3e50;
+    --color-text-muted: #7f8c8d;
+    --color-border: rgba(0, 0, 0, 0.1);
+    --color-border-focus: #3498db;
     --color-error: #e74c3c;
+    --color-error-bg: #fde8e8;
     --color-success: #27ae60;
-    
-    /* Typography Scale */
+
+    /* Typography Scale (Req 7.1: min 16px body, Req 10.2: min 20px headings) */
+    --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     --font-size-xs: 12px;
     --font-size-sm: 14px;
     --font-size-base: 16px;
+    /* Minimum body text size */
     --font-size-lg: 20px;
+    /* Minimum heading size */
     --font-size-xl: 24px;
     --font-size-2xl: 32px;
-    
-    /* Spacing */
+    /* Prominent balance display */
+
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    --line-height-base: 1.5;
+    --line-height-heading: 1.3;
+
+    /* Spacing Scale */
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 16px;
     --spacing-lg: 24px;
     --spacing-xl: 32px;
-    
+
+    /* Layout & Touch Target Constraints (Req 7.1, 7.4) */
+    --min-tap-target: 44px;
+    /* Minimum 44x44px tap target size */
+    --max-content-width: 1200px;
+
     /* Border Radius */
+    --border-radius-sm: 4px;
     --border-radius: 8px;
-    
-    /* Shadows */
+    --border-radius-lg: 12px;
+
+    /* Box Shadows */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+    /* Accessibility & Focus Indicators */
+    --focus-ring: 2px solid var(--color-primary);
+    --focus-ring-offset: 2px;
+    --transition-fast: 0.2s ease;
 }
 
-/* CSS Reset / Normalize */
+/* ==========================================================================
+   Dark Mode Theme Overrides (Req 11)
+   ========================================================================== */
+[data-theme="dark"] {
+    --color-background: #0f172a;
+    --color-surface: #1e293b;
+    --color-text: #f8fafc;
+    --color-text-muted: #94a3b8;
+    --color-secondary: #e2e8f0;
+    --color-border: rgba(255, 255, 255, 0.12);
+    --color-border-focus: #60a5fa;
+    --color-error: #f87171;
+    --color-error-bg: rgba(239, 68, 68, 0.2);
+    --color-food-bg: rgba(255, 107, 107, 0.25);
+    --color-transport-bg: rgba(78, 205, 196, 0.25);
+    --color-fun-bg: rgba(255, 230, 109, 0.25);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   CSS Reset / Normalize
+   ========================================================================== */
 *,
 *::before,
 *::after {
@@ -50,19 +112,105 @@
     padding: 0;
 }
 
-/* Base Styles */
+/* Responsive Media Reset */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* Form Elements Font Inheritance */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+/* Overflow Wrap for Headings and Paragraphs */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* ==========================================================================
+   Base Styles & Body Defaults
+   Requirements: 7.1 (320px to 1920px no horizontal scroll), 10.2 (min font sizes)
+   ========================================================================== */
 html {
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: var(--font-family-base);
     font-size: var(--font-size-base);
-    line-height: 1.5;
+    line-height: var(--line-height-base);
     color: var(--color-text);
     background-color: var(--color-background);
     min-height: 100vh;
+    overflow-x: hidden;
+    /* Prevent horizontal scrolling per Requirement 7.1 */
+}
+
+/* Headings Base Styles (Requirement 10.2: Minimum 20px for headings) */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: var(--font-size-lg);
+    /* At least 20px */
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-secondary);
+    line-height: var(--line-height-heading);
+}
+
+h1 {
+    font-size: var(--font-size-2xl);
+}
+
+/* Global Focus Styles for Accessibility */
+:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+}
+
+/* Accessibility Utility: Visually Hidden (for screen readers) */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Category Color Matching Classes (Requirement 10.3) */
+.category-color-food {
+    color: var(--color-food);
+}
+
+.category-color-transport {
+    color: var(--color-transport);
+}
+
+.category-color-fun {
+    color: var(--color-fun);
 }
 
 /* Browser Warning (noscript) */
@@ -97,101 +245,1023 @@ body {
     max-width: 500px;
 }
 
-/* Container */
+/* ==========================================================================
+   Layout Containers (Requirements: 7.1, 7.2)
+   ========================================================================== */
+.app-container,
 .container {
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: var(--spacing-md);
-}
-
-/* App Container */
-.app-container {
-    width: 100%;
-    max-width: 1200px;
+    max-width: var(--max-content-width);
     margin: 0 auto;
     padding: var(--spacing-md);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    gap: var(--spacing-md);
 }
 
-/* Balance Display Section */
+/* Ensure hidden attribute is strictly respected */
+[hidden] {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Task 3.2: Balance Display Component
+   Requirements: 4.1 (top 15% viewport), 10.1 (top 20% viewport, >= 1.5x body text)
+   ========================================================================== */
 .balance-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: var(--spacing-lg) var(--spacing-md);
-    min-height: 15vh;
-    max-height: 20vh;
+    min-height: 120px;
     background-color: var(--color-surface);
-    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-sm);
-    margin-bottom: var(--spacing-md);
+    text-align: center;
+    transition: box-shadow var(--transition-fast);
+}
+
+.balance-section:hover {
+    box-shadow: var(--shadow-md);
 }
 
 .balance-label {
     font-size: var(--font-size-lg);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-secondary);
     margin-bottom: var(--spacing-xs);
+    letter-spacing: 0.5px;
 }
 
 .balance-value {
+    /* 32px is 2x base body font (16px), strictly exceeding 1.5x requirement */
     font-size: var(--font-size-2xl);
-    font-weight: 700;
-    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+    color: #1e6091;
+    /* High contrast >= 4.5:1 on white (WCAG AA compliant) */
+    line-height: var(--line-height-heading);
+    word-break: break-word;
 }
 
-/* Transaction List Section */
-.transactions-section {
-    flex: 1;
+/* ==========================================================================
+   Task 3.3: Transaction Form Component
+   Requirements: 1.1 (form fields), 7.4 (min 44x44px tap targets), 9.1, 9.2 (validation)
+   ========================================================================== */
+.form-section {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-lg);
+}
+
+.transaction-form {
     display: flex;
     flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    min-width: 0;
+}
+
+.form-label {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-secondary);
+}
+
+/* Input Fields and Dropdown with 44x44px min tap target */
+.form-input,
+.form-select {
+    min-height: var(--min-tap-target);
+    /* 44px minimum tap target (Req 7.4) */
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-base);
+    /* >= 16px to prevent zoom and meet Req 7.1 */
+    color: var(--color-text);
     background-color: var(--color-surface);
+    border: 1.5px solid var(--color-border);
     border-radius: var(--border-radius);
+    outline: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    width: 100%;
+}
+
+.form-input:focus,
+.form-select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+/* Input error state */
+.form-input.has-error,
+.form-select.has-error,
+.form-input[aria-invalid="true"],
+.form-select[aria-invalid="true"] {
+    border-color: var(--color-error);
+    background-color: #fff9f9;
+}
+
+.form-input.has-error:focus,
+.form-select.has-error:focus {
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+}
+
+/* Custom styled dropdown arrow */
+.form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232c3e50' d='M6 8.5L1.5 4h9L6 8.5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-md) center;
+    padding-right: var(--spacing-xl);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* Submit Button */
+.btn-submit {
+    min-height: var(--min-tap-target);
+    /* 44px min tap target (Req 7.4) */
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: #ffffff;
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-submit:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
     box-shadow: var(--shadow-sm);
+}
+
+/* Accessible focus ring on submit button */
+.btn-submit:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+}
+
+/* Error message styling */
+.error-message {
+    font-size: var(--font-size-sm);
+    color: var(--color-error);
+    min-height: 18px;
+    line-height: 1.3;
+    display: block;
+}
+
+/* ==========================================================================
+   Task 3.4: Transaction List Component
+   Requirements: 2.1, 2.2, 2.3 (scrollable container), 3.1 (delete button)
+   ========================================================================== */
+.transactions-section {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
 }
 
 .transactions-title {
     font-size: var(--font-size-lg);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-secondary);
-    padding: var(--spacing-md);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
 }
 
+/* Scrollable Container with max-height constraint (Req 2.3) */
 .transactions-list-container {
-    flex: 1;
-    overflow-y: auto;
     max-height: 400px;
-    padding: var(--spacing-sm);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    scroll-behavior: smooth;
 }
 
+/* Custom Scrollbar for list container */
+.transactions-list-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.transactions-list-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.transactions-list-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+}
+
+/* Empty State Message */
 .transactions-empty-message {
     text-align: center;
     padding: var(--spacing-xl) var(--spacing-md);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+}
+
+/* Transaction Item Card */
+.transaction-item,
+.transaction-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.transaction-item:hover,
+.transaction-card:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+.transaction-info,
+.transaction-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    min-width: 0;
+    flex: 1;
+}
+
+.transaction-name,
+.item-name {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
     color: var(--color-text);
-    opacity: 0.7;
+    word-break: break-word;
+}
+
+/* Category Badge with Color Indicators (Req 10.3) */
+.transaction-category,
+.category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    padding: 2px 8px;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+.category-badge.category-food,
+.category-badge[data-category="Food"],
+.transaction-category.Food {
+    background-color: var(--color-food-bg);
+    color: #c0392b;
+}
+
+.category-badge.category-transport,
+.category-badge[data-category="Transport"],
+.transaction-category.Transport {
+    background-color: var(--color-transport-bg);
+    color: #16a085;
+}
+
+.category-badge.category-fun,
+.category-badge[data-category="Fun"],
+.transaction-category.Fun {
+    background-color: var(--color-fun-bg);
+    color: #b7950b;
+}
+
+.transaction-meta,
+.transaction-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex-shrink: 0;
+}
+
+.transaction-amount {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-secondary);
+    white-space: nowrap;
+}
+
+/* Delete Button with 44x44px min tap target (Req 7.4, 3.1) */
+.btn-delete,
+.delete-btn,
+.transaction-delete-btn {
+    min-width: var(--min-tap-target);
+    /* 44px */
+    min-height: var(--min-tap-target);
+    /* 44px */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    font-size: var(--font-size-lg);
+    line-height: 1;
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.btn-delete:hover,
+.delete-btn:hover,
+.transaction-delete-btn:hover {
+    background-color: var(--color-error-bg);
+    color: var(--color-error);
+    border-color: rgba(231, 76, 60, 0.2);
+}
+
+.btn-delete:active,
+.delete-btn:active,
+.transaction-delete-btn:active {
+    transform: scale(0.96);
+}
+
+.btn-delete:focus-visible,
+.delete-btn:focus-visible,
+.transaction-delete-btn:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+}
+
+/* ==========================================================================
+   Task 3.5: Pie Chart Component
+   Requirements: 5.1 (pie chart), 5.6 (legend), 10.3 (category colors)
+   ========================================================================== */
+.chart-section {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-secondary);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 300px;
+    width: 100%;
+}
+
+.pie-chart-canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Empty Chart State */
+.chart-empty-message {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+    max-width: 280px;
+    line-height: var(--line-height-base);
+}
+
+/* Chart Legend */
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: var(--border-radius-sm);
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.legend-label {
+    font-weight: var(--font-weight-medium);
     font-size: var(--font-size-base);
 }
 
-/* Responsive: Mobile First (320px - 768px) */
-/* Base styles above are for mobile */
+/* ==========================================================================
+   Task 3.6: Responsive Layout Breakpoints
+   Requirements: 7.1 (320px-1920px no horizontal scroll), 7.2 (<= 768px single col),
+   7.3 (> 768px multi-column layout with list and chart side by side)
+   ========================================================================== */
 
-/* Tablet and Desktop: 768px+ */
+/* Mobile Breakpoint (320px - 480px) */
+@media (max-width: 480px) {
+
+    .app-container,
+    .container {
+        padding: var(--spacing-sm);
+        gap: var(--spacing-sm);
+    }
+
+    .balance-section,
+    .form-section,
+    .transactions-section,
+    .chart-section {
+        padding: var(--spacing-md);
+    }
+
+    .pie-chart-canvas {
+        width: 240px;
+        height: 240px;
+    }
+}
+
+/* Tablet and Desktop Breakpoint (> 768px) */
 @media (min-width: 768px) {
+
+    .app-container,
     .container {
         padding: var(--spacing-lg);
+        gap: var(--spacing-lg);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "header header"
+            "balance balance"
+            "form form"
+            "transactions chart"
+            "footer footer";
+        align-items: start;
     }
-    
+
+    .app-header {
+        grid-area: header;
+    }
+
+    .app-footer {
+        grid-area: footer;
+    }
+
     .balance-section {
+        grid-area: balance;
         padding: var(--spacing-xl) var(--spacing-lg);
     }
-    
-    .transactions-list-container {
-        max-height: 500px;
+
+    .form-section {
+        grid-area: form;
     }
+
+    /* Horizontal inline form layout for tablet/desktop */
+    .transaction-form {
+        display: grid;
+        grid-template-columns: 2fr 1.5fr 1.5fr auto;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+
+    .transaction-form .btn-submit {
+        margin-top: 28px;
+        /* Aligns with form inputs having labels */
+    }
+
+    /* Side-by-side list and chart (Requirement 7.3) */
+    .transactions-section {
+        grid-area: transactions;
+        min-height: 460px;
+    }
+
+    .chart-section {
+        grid-area: chart;
+        min-height: 460px;
+    }
+
+    .transactions-list-container {
+        max-height: 480px;
+    }
+}
+
+/* Large Desktop Breakpoint (> 1200px) */
+@media (min-width: 1200px) {
+
+    .app-container,
+    .container {
+        padding: var(--spacing-xl) 0;
+    }
+}
+
+/* ==========================================================================
+   Storage Error Notification (Req 6.5)
+   ========================================================================== */
+.storage-notification {
+    background-color: var(--color-error-bg);
+    color: #c0392b;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.storage-notification .btn-dismiss {
+    background: transparent;
+    border: none;
+    color: #c0392b;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+/* ==========================================================================
+   Optional Challenges Component Styling
+   ========================================================================== */
+
+/* 1. App Header & Theme Toggle (Req 11) */
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-xs) 0;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--spacing-xs);
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.header-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.header-badge {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    background: rgba(52, 152, 219, 0.15);
+    padding: 2px 8px;
+    border-radius: 12px;
+    display: inline-block;
+    width: fit-content;
+}
+
+.header-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.btn-theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: var(--min-tap-target);
+    padding: 6px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-theme-toggle:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+}
+
+[data-theme="dark"] .light-icon {
+    display: inline-block;
+}
+
+[data-theme="dark"] .dark-icon {
+    display: none;
+}
+
+:root:not([data-theme="dark"]) .light-icon {
+    display: none;
+}
+
+:root:not([data-theme="dark"]) .dark-icon {
+    display: inline-block;
+}
+
+/* 2. Budget Limit & Spending Alerts (Req 12) */
+.balance-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.balance-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.budget-badge {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.budget-badge-neutral {
+    background-color: rgba(127, 140, 141, 0.15);
+    color: var(--color-text-muted);
+}
+
+.budget-badge-safe {
+    background-color: rgba(39, 174, 96, 0.15);
+    color: #27ae60;
+}
+
+.budget-badge-warning {
+    background-color: rgba(243, 156, 18, 0.15);
+    color: #d35400;
+}
+
+.budget-badge-exceeded {
+    background-color: var(--color-error-bg);
+    color: var(--color-error);
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    animation: pulseWarning 1.5s infinite;
+}
+
+@keyframes pulseWarning {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+}
+
+.balance-section.budget-exceeded-border {
+    border: 2px solid var(--color-error);
+    box-shadow: 0 0 12px rgba(231, 76, 60, 0.25);
+}
+
+.budget-controls {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.budget-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-medium);
+}
+
+.budget-progress-track {
+    width: 100%;
+    height: 8px;
+    background-color: var(--color-background);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+}
+
+.budget-progress-fill {
+    height: 100%;
+    background-color: var(--color-success);
+    border-radius: 4px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.budget-progress-fill.status-warning {
+    background-color: #f39c12;
+}
+
+.budget-progress-fill.status-exceeded {
+    background-color: var(--color-error);
+}
+
+.budget-form {
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+
+.budget-input {
+    flex: 1;
+    min-height: 38px;
+    min-width: 180px;
+    font-size: var(--font-size-sm);
+}
+
+.btn-budget {
+    min-height: 38px;
+    padding: 0 var(--spacing-md);
+    font-size: var(--font-size-sm);
+    border-radius: var(--border-radius);
+    background-color: var(--color-secondary);
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-weight: var(--font-weight-semibold);
+}
+
+.btn-clear-budget {
+    min-height: 38px;
+    color: var(--color-error);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    font-weight: var(--font-weight-medium);
+}
+
+/* 3. Custom Category Creation (Req 15) */
+.category-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-link {
+    background: transparent;
+    border: none;
+    color: var(--color-primary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.custom-category-box {
+    margin-top: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+}
+
+.custom-category-row {
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.custom-cat-name-input {
+    flex: 1;
+    min-height: 36px;
+    min-width: 140px;
+    font-size: var(--font-size-sm);
+    padding: 4px 8px;
+}
+
+.custom-cat-color-input {
+    width: 38px;
+    height: 36px;
+    padding: 2px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    background: var(--color-surface);
+}
+
+.btn-sm {
+    min-height: 36px;
+    padding: 4px 10px;
+    font-size: var(--font-size-xs);
+    border-radius: var(--border-radius-sm);
+}
+
+.btn-secondary {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-weight: var(--font-weight-semibold);
+}
+
+.btn-text {
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+}
+
+/* 4. Transactions Toolbar & Sorting (Req 13, 14) */
+.transactions-header-row {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.transactions-header-row .transactions-title {
+    padding: 0;
+    border-bottom: none;
+}
+
+.transactions-toolbar {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.toolbar-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.toolbar-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-medium);
+}
+
+.toolbar-select {
+    font-size: var(--font-size-xs);
+    min-height: 34px;
+    padding: 4px 24px 4px 8px;
+    width: auto;
+}
+
+/* 5. Monthly Summary Card (Req 14) */
+.monthly-summary-card {
+    margin: var(--spacing-sm) var(--spacing-md) 0 var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(52, 152, 219, 0.1);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.monthly-summary-period {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    display: block;
+}
+
+.monthly-summary-sub {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.monthly-summary-amount {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    display: block;
+    text-align: right;
+}
+
+.monthly-summary-count {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-align: right;
+    display: block;
+}
+
+.chart-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.chart-header-row .chart-title {
+    padding: 0;
+    border-bottom: none;
+}
+
+.chart-period-badge {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    padding: 2px 8px;
+    background: rgba(52, 152, 219, 0.15);
+    color: var(--color-primary);
+    border-radius: 12px;
+}
+
+/* ==========================================================================
+   Semantic Application Footer & Credit
+   ========================================================================== */
+.app-footer {
+    grid-area: footer;
+    width: 100%;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg) var(--spacing-md);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.25s ease;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.footer-credit {
+    margin: 0;
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.footer-credit strong {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+.footer-subtitle {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    opacity: 0.9;
 }

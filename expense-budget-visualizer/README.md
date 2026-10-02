@@ -4,12 +4,16 @@ A mobile-friendly web application for tracking daily expenses. Built with vanill
 
 ## Features
 
-- **Transaction Management**: Add and delete expense transactions
-- **Category Tracking**: Organize expenses by Food, Transport, or Fun
-- **Visual Analytics**: Pie chart showing spending distribution by category
-- **Balance Overview**: Real-time total balance display
-- **Data Persistence**: All data stored locally in your browser
-- **Responsive Design**: Works on mobile (320px+) and desktop devices
+- **Transaction Management**: Add and delete expense transactions with validation and confirmation
+- **Category Tracking**: Organize expenses by Food, Transport, Fun, or unlimited custom categories
+- **Visual Analytics**: Dynamic Canvas pie chart showing spending distribution by category
+- **Balance & Budget Overview**: Real-time total balance display and monthly budget tracking with visual status alerts (Safe, Warning, Exceeded)
+- **Period Filter & Monthly Summary**: Filter spending by specific calendar months or view all-time analytics
+- **Flexible Sorting**: Sort transactions by Date (Newest/Oldest), Amount (High to Low/Low to High), or Category (A to Z)
+- **Dark/Light Mode**: Instant theme switcher with system preference detection and persistence
+- **Custom Categories**: Create user-defined categories with customized color picker and deterministic contrast styling
+- **Data Persistence**: All transactions, budgets, custom categories, and theme preferences stored securely in Local Storage
+- **Responsive Design**: Mobile-first architecture that seamlessly adapts from 320px smartphones to wide desktop monitors
 
 ## Getting Started
 
@@ -31,20 +35,33 @@ No build tools or server required - it runs entirely in the browser.
 
 1. Enter the item name (1-100 characters)
 2. Enter the amount (positive number with up to 2 decimal places)
-3. Select a category (Food, Transport, or Fun)
-4. Click the "Add" button
+3. Select a category or click **+ New Category** to create a custom category
+4. Click the "Add Transaction" button
 
-### Deleting a Transaction
+### Managing Custom Categories
 
-1. Locate the transaction in the list
-2. Click the delete button (X)
-3. Confirm the deletion in the dialog
+1. Click **+ New Category** next to the category label
+2. Enter your category name (1-30 characters) and choose a color with the color picker
+3. Click **Save**; the new category will immediately appear in the dropdown, legend, and pie chart
 
-### Viewing Your Data
+### Setting a Spending Budget Limit
 
-- **Total Balance**: Displayed prominently at the top of the page
-- **Transaction List**: Scrollable list of all transactions (newest first)
-- **Pie Chart**: Visual breakdown of spending by category
+1. Enter your target monthly budget in the budget form (e.g. `1000000`)
+2. Click **Set Budget**
+3. Watch the progress bar and status badge:
+   - **Safe (< 80%)**: Green badge
+   - **Warning (80% - 100%)**: Orange badge
+   - **Exceeded (> 100%)**: Pulsing red alert with border highlight
+4. Click **Remove** anytime to clear the budget limit
+
+### Period Filtering & Sorting
+
+- **Filter by Month**: Use the Period dropdown to select a specific month or "All Time"
+- **Sort Transactions**: Reorder transactions by Date (Newest/Oldest), Amount (High/Low), or Category (A-Z)
+
+### Dark/Light Mode Switcher
+
+- Click the theme button in the top right header to switch between light and dark modes instantly
 
 ## Browser Support
 

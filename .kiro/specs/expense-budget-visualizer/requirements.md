@@ -138,3 +138,62 @@ The Expense & Budget Visualizer is a mobile-friendly web application designed to
 2. THE Application SHALL use a minimum font size of 16px for body text and a minimum font size of 20px for headings
 3. THE Application SHALL display category labels with colors that exactly match the corresponding Pie Chart segment colors
 4. THE Application SHALL display UI elements in the following order from top to bottom: Total Balance, input form, transaction list, then Pie Chart
+
+### Requirement 11: Dark/Light Mode Toggle (Optional Challenge)
+
+**User Story:** As a user, I want to switch between dark and light themes, so that I can comfortably use the application in different lighting conditions.
+
+#### Acceptance Criteria
+
+1. THE Application SHALL provide a visible theme toggle control in the header
+2. WHEN the user clicks the theme toggle, THE Application SHALL switch between light mode and dark mode instantly without reloading the page
+3. THE Application SHALL persist the user's selected theme preference in Local Storage across browser sessions
+4. WHEN the Application loads, IF a saved theme preference exists, THE Application SHALL apply it; otherwise, it SHALL detect system preference via `prefers-color-scheme`
+5. IN dark mode, THE Application SHALL use high-contrast, accessible dark backgrounds and light text with clear borders and soft card shadows
+
+### Requirement 12: Spending Limit and Budget Alert (Optional Challenge)
+
+**User Story:** As a user, I want to set a spending limit and receive visual alerts when approaching or exceeding it, so that I can keep my budget under control.
+
+#### Acceptance Criteria
+
+1. THE Application SHALL provide an interface for setting and updating a spending budget limit (0.01 to 99,999,999.99)
+2. THE Application SHALL store the spending limit in Local Storage and restore it upon application load
+3. WHEN total spending exceeds the set limit, THE Application SHALL display a prominent warning indicator on the balance overview
+4. WHEN total spending reaches 80% or more of the set limit, THE Application SHALL display a cautionary indicator
+5. THE Application SHALL allow users to update or remove the budget limit at any time
+
+### Requirement 13: Transaction Sorting (Optional Challenge)
+
+**User Story:** As a user, I want to sort my transaction list by date, amount, or category, so that I can analyze my expenses conveniently.
+
+#### Acceptance Criteria
+
+1. THE Application SHALL provide sorting controls for the transaction list
+2. THE Application SHALL support sorting options: Date (Newest First, Oldest First), Amount (Highest to Lowest, Lowest to Highest), and Category (A to Z)
+3. WHEN a sort option is selected, THE Application SHALL reorder the displayed transaction list within 100 milliseconds
+4. WHEN new transactions are added or existing transactions are deleted, THE Application SHALL preserve the active sort selection
+
+### Requirement 14: Monthly Summary View (Optional Challenge)
+
+**User Story:** As a user, I want to view my spending summarized by month, so that I can compare and track monthly expense trends.
+
+#### Acceptance Criteria
+
+1. THE Application SHALL provide a monthly filter selector allowing users to view all transactions or filter by a specific month (e.g., "October 2026")
+2. WHEN a specific month is selected, THE Application SHALL recalculate and display the monthly total spending, filtered transaction list, and monthly pie chart distribution
+3. THE Application SHALL dynamically detect and list all months present in recorded transactions
+4. THE Application SHALL provide a summary view card displaying total expenses and transaction counts for the selected month
+
+### Requirement 15: Custom Categories (Optional Challenge)
+
+**User Story:** As a user, I want to create custom categories beyond the default Food, Transport, and Fun, so that I can organize my expenses according to my personal needs.
+
+#### Acceptance Criteria
+
+1. THE Application SHALL provide an interface to add custom categories with a custom name (1-30 characters) and color assignment
+2. THE Application SHALL validate custom category names to prevent duplicate categories and empty names
+3. WHEN a custom category is created, THE Application SHALL persist it in Local Storage and include it in the category selection dropdown
+4. THE Pie Chart and Legend SHALL dynamically render custom categories using their assigned colors
+5. THE Input Validation service SHALL recognize and accept all user-created custom categories alongside default categories
+
