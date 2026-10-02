@@ -8,13 +8,127 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- Application content will be built in subsequent tasks -->
     <noscript>
         <div class="browser-warning">
             This application requires JavaScript to function. 
             Please enable JavaScript in your browser settings.
         </div>
     </noscript>
+    
+    <main class="app-container">
+        <!-- Balance Display Section -->
+        <section class="balance-section" aria-labelledby="balance-heading">
+            <h1 id="balance-heading" class="balance-label">Total Balance</h1>
+            <p class="balance-value" id="total-balance" aria-live="polite">Rp 0.00</p>
+        </section>
+        
+        <!-- Transaction Input Form Section -->
+        <section class="form-section" aria-labelledby="form-heading">
+            <h2 id="form-heading" class="visually-hidden">Add Transaction</h2>
+            <form id="transaction-form" class="transaction-form" novalidate>
+                <!-- Item Name Field -->
+                <div class="form-group">
+                    <label for="item-name" class="form-label">Item Name</label>
+                    <input 
+                        type="text" 
+                        id="item-name" 
+                        name="itemName"
+                        class="form-input" 
+                        maxlength="100"
+                        placeholder="Enter item name"
+                        autocomplete="off"
+                        aria-describedby="item-name-error"
+                        required
+                    >
+                    <span id="item-name-error" class="error-message" role="alert" aria-live="polite"></span>
+                </div>
+                
+                <!-- Amount Field -->
+                <div class="form-group">
+                    <label for="amount" class="form-label">Amount (Rp)</label>
+                    <input 
+                        type="number" 
+                        id="amount" 
+                        name="amount"
+                        class="form-input" 
+                        min="0.01"
+                        max="9999999.99"
+                        step="0.01"
+                        placeholder="0.00"
+                        aria-describedby="amount-error"
+                        required
+                    >
+                    <span id="amount-error" class="error-message" role="alert" aria-live="polite"></span>
+                </div>
+                
+                <!-- Category Field -->
+                <div class="form-group">
+                    <label for="category" class="form-label">Category</label>
+                    <select 
+                        id="category" 
+                        name="category"
+                        class="form-select" 
+                        aria-describedby="category-error"
+                        required
+                    >
+                        <option value="">Select category</option>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Fun">Fun</option>
+                    </select>
+                    <span id="category-error" class="error-message" role="alert" aria-live="polite"></span>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="btn-submit" aria-label="Add transaction">
+                    Add Transaction
+                </button>
+            </form>
+        </section>
+        
+        <!-- Transaction List Section -->
+        <section class="transactions-section" aria-labelledby="transactions-heading">
+            <h2 id="transactions-heading" class="transactions-title">Transactions</h2>
+            <div class="transactions-list-container" id="transactions-list-container" role="list" aria-label="Transaction list">
+                <!-- Transaction items will be rendered here by JavaScript -->
+            </div>
+            <p class="transactions-empty-message" id="transactions-empty-message" role="status" aria-live="polite" hidden>
+                No transactions recorded yet. Add your first transaction above.
+            </p>
+        </section>
+        
+        <!-- Pie Chart Section -->
+        <section class="chart-section" aria-labelledby="chart-heading">
+            <h2 id="chart-heading" class="chart-title">Spending Distribution</h2>
+            <div class="chart-container">
+                <canvas 
+                    id="pie-chart" 
+                    class="pie-chart-canvas"
+                    width="300" 
+                    height="300"
+                    role="img"
+                    aria-label="Pie chart showing spending distribution by category"
+                ></canvas>
+                <p class="chart-empty-message" id="chart-empty-message" role="status" aria-live="polite" hidden>
+                    No spending data to display. Add transactions to see your spending distribution.
+                </p>
+            </div>
+            <div class="chart-legend" id="chart-legend" aria-label="Chart legend">
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #FF6B6B;" aria-hidden="true"></span>
+                    <span class="legend-label">Food</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #4ECDC4;" aria-hidden="true"></span>
+                    <span class="legend-label">Transport</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #FFE66D;" aria-hidden="true"></span>
+                    <span class="legend-label">Fun</span>
+                </div>
+            </div>
+        </section>
+    </main>
     
     <script src="js/app.js" defer></script>
 </body>

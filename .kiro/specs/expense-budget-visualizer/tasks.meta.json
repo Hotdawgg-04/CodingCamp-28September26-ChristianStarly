@@ -31,6 +31,71 @@
         "chatSessionId": "sess_863247e4-d96d-4543-b0e7-5b26a143f836",
         "timestamp": 1790923206473
       }
+    ],
+    "2.1 Create main HTML document structure": [
+      {
+        "executionId": "2384bb83-1591-476f-92ad-cc0fcc049b5f",
+        "chatSessionId": "sess_d68a90c2-e36d-4912-98c7-a821f027bd9e",
+        "timestamp": 1790924821260
+      },
+      {
+        "executionId": "2384bb83-1591-476f-92ad-cc0fcc049b5f",
+        "chatSessionId": "sess_d68a90c2-e36d-4912-98c7-a821f027bd9e",
+        "timestamp": 1790924900491
+      }
+    ],
+    "2.2 Build balance display section": [
+      {
+        "executionId": "25876a76-fc5c-477d-b581-776f837358af",
+        "chatSessionId": "sess_605a050e-92b6-4b30-90d1-2441f4a650e7",
+        "timestamp": 1790925310800
+      },
+      {
+        "executionId": "25876a76-fc5c-477d-b581-776f837358af",
+        "chatSessionId": "sess_605a050e-92b6-4b30-90d1-2441f4a650e7",
+        "timestamp": 1790925411443
+      }
+    ],
+    "2.3 Build transaction input form": [
+      {
+        "executionId": "64b5b0dd-5b53-4ec8-9ebc-c9b5713361a4",
+        "chatSessionId": "sess_4f04eb0c-4292-4cfd-877e-e26d6a7dcfb0",
+        "timestamp": 1790925730081
+      },
+      {
+        "executionId": "d2a4ac4f-6ed5-41ef-8f62-e1cbd354b8b2",
+        "chatSessionId": "sess_ec4c60a6-6267-4adf-9ec6-0f14b5711645",
+        "timestamp": 1790931927721
+      },
+      {
+        "executionId": "d2a4ac4f-6ed5-41ef-8f62-e1cbd354b8b2",
+        "chatSessionId": "sess_ec4c60a6-6267-4adf-9ec6-0f14b5711645",
+        "timestamp": 1790931947983
+      }
+    ],
+    "2.4 Build transaction list container": [
+      {
+        "executionId": "56be1700-55f9-4af3-b764-9b601b710263",
+        "chatSessionId": "sess_49b4d99c-ca40-4324-8a36-955b48ea4385",
+        "timestamp": 1790932036796
+      },
+      {
+        "executionId": "56be1700-55f9-4af3-b764-9b601b710263",
+        "chatSessionId": "sess_49b4d99c-ca40-4324-8a36-955b48ea4385",
+        "timestamp": 1790932436637
+      }
+    ],
+    "2.5 Build pie chart section": [
+      {
+        "executionId": "c4494d3d-9971-42ad-8a71-64c08cceb032",
+        "chatSessionId": "sess_6a9280b5-b0a5-463c-b7dc-e69511a8febe",
+        "timestamp": 1790932499768
+      },
+      {
+        "executionId": "c4494d3d-9971-42ad-8a71-64c08cceb032",
+        "chatSessionId": "sess_6a9280b5-b0a5-463c-b7dc-e69511a8febe",
+        "timestamp": 1790932588702
+      }
     ]
   }
 }

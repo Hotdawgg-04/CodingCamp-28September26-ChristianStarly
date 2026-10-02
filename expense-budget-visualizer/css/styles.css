@@ -105,6 +105,79 @@ body {
     padding: var(--spacing-md);
 }
 
+/* App Container */
+.app-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Balance Display Section */
+.balance-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg) var(--spacing-md);
+    min-height: 15vh;
+    max-height: 20vh;
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.balance-label {
+    font-size: var(--font-size-lg);
+    font-weight: 500;
+    color: var(--color-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.balance-value {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+/* Transaction List Section */
+.transactions-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.transactions-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-secondary);
+    padding: var(--spacing-md);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.transactions-list-container {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 400px;
+    padding: var(--spacing-sm);
+}
+
+.transactions-empty-message {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    color: var(--color-text);
+    opacity: 0.7;
+    font-size: var(--font-size-base);
+}
+
 /* Responsive: Mobile First (320px - 768px) */
 /* Base styles above are for mobile */
 
@@ -112,5 +185,13 @@ body {
 @media (min-width: 768px) {
     .container {
         padding: var(--spacing-lg);
+    }
+    
+    .balance-section {
+        padding: var(--spacing-xl) var(--spacing-lg);
+    }
+    
+    .transactions-list-container {
+        max-height: 500px;
     }
 }
