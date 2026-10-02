@@ -1,0 +1,116 @@
+/* Expense & Budget Visualizer - Base Styles */
+
+/* CSS Custom Properties */
+:root {
+    /* Primary Colors */
+    --color-primary: #3498db;
+    --color-secondary: #2c3e50;
+    
+    /* Category Colors */
+    --color-food: #FF6B6B;
+    --color-transport: #4ECDC4;
+    --color-fun: #FFE66D;
+    
+    /* UI Colors */
+    --color-background: #f8f9fa;
+    --color-surface: #ffffff;
+    --color-text: #2c3e50;
+    --color-error: #e74c3c;
+    --color-success: #27ae60;
+    
+    /* Typography Scale */
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-base: 16px;
+    --font-size-lg: 20px;
+    --font-size-xl: 24px;
+    --font-size-2xl: 32px;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    
+    /* Border Radius */
+    --border-radius: 8px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* CSS Reset / Normalize */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Base Styles */
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    min-height: 100vh;
+}
+
+/* Browser Warning (noscript) */
+.browser-warning {
+    padding: var(--spacing-lg);
+    text-align: center;
+    background-color: var(--color-error);
+    color: white;
+    font-size: var(--font-size-lg);
+}
+
+/* Unsupported Browser Warning (JavaScript-generated) */
+.browser-warning.unsupported-browser {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.browser-warning.unsupported-browser h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-sm);
+}
+
+.browser-warning.unsupported-browser ul {
+    list-style-position: inside;
+}
+
+.browser-warning.unsupported-browser p {
+    max-width: 500px;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+}
+
+/* Responsive: Mobile First (320px - 768px) */
+/* Base styles above are for mobile */
+
+/* Tablet and Desktop: 768px+ */
+@media (min-width: 768px) {
+    .container {
+        padding: var(--spacing-lg);
+    }
+}

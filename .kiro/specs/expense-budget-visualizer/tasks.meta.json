@@ -1,0 +1,36 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Create project directory structure": [
+      {
+        "executionId": "48c07188-a128-4a15-b218-2f8c54099faf",
+        "chatSessionId": "sess_863247e4-d96d-4543-b0e7-5b26a143f836",
+        "timestamp": 1790922677800
+      },
+      {
+        "executionId": "48c07188-a128-4a15-b218-2f8c54099faf",
+        "chatSessionId": "sess_863247e4-d96d-4543-b0e7-5b26a143f836",
+        "timestamp": 1790923108725
+      }
+    ],
+    "1.2 Add browser compatibility check and noscript fallback": [
+      {
+        "executionId": "48c07188-a128-4a15-b218-2f8c54099faf",
+        "chatSessionId": "sess_863247e4-d96d-4543-b0e7-5b26a143f836",
+        "timestamp": 1790923116080
+      },
+      {
+        "executionId": "48c07188-a128-4a15-b218-2f8c54099faf",
+        "chatSessionId": "sess_863247e4-d96d-4543-b0e7-5b26a143f836",
+        "timestamp": 1790923206337
+      }
+    ],
+    "1. Set up project structure and configuration": [
+      {
+        "executionId": "48c07188-a128-4a15-b218-2f8c54099faf",
+        "chatSessionId": "sess_863247e4-d96d-4543-b0e7-5b26a143f836",
+        "timestamp": 1790923206473
+      }
+    ]
+  }
+}
